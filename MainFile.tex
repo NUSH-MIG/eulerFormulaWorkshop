@@ -1,0 +1,879 @@
+    % specifies the documnt class. We usually use article but there are others. 
+\documentclass[a4paper,12pt,oneside]{book}              
+
+% these are standard packages used for the math symbols
+\usepackage{amsmath,amssymb,amsthm, enumitem, hyperref, tabto} 
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage[fleqn]{amsmath}
+\usepackage{lastpage}
+\usepackage[pdftex]{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[absolute,overlay]{textpos}
+\graphicspath{ {./Photos/} }
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,right=1in,left=1in]{geometry}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{decorations.markings,arrows}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\pgfplotsset{compat=newest}
+\usepackage{amsmath}
+
+% These commands below is to make sure the numbering of these are consistent with theorem
+% If you are not sure what something means, delete them, build a new file and see the
+% difference between the files. You can ignore this part for now.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+
+
+% Title of your project
+\title{%
+  \Huge Euler's Formula \\
+  \LARGE  The Truth Behind Complex Numbers
+  }
+
+% The author command places text right after title
+\author{by \\
+\Large The NUS High Math Interest Group (MIG) \\
+}
+
+\date{\Large April - May 2021}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\part{An Introduction}
+
+\newpage
+\chapter{Complexity - The World of Lies}
+Complex numbers generally consists of either a real part, or an imaginary part, or both. It is expressed in the form a + bi, with "a" denoting the real part, and "b" being the coefficient of the imaginary part. "i" actually represents the square root of -1, which has no predetermined value. Mathematicians just called it "i", which means imaginary. When we say Re(z), where 'z' is a complex number, say 5 + 3i, we are looking for the "Real part", which in this case is 5. Consequently, Im(z) = 3, as it is the imaginary part.
+
+
+\newpage
+\chapter{e: How does it work?}
+"e", also known as euler's number, is one of the few mathematical constants being represented by a greek letter. It is approximately equal to 2.71828, and is the limit of $(1 + 1/n)^n$ as n approaches infinity, which is helpful when studying compound interest. 
+
+\newpage
+\chapter{Taylor Series}
+Whilst we do know that Maclaurin Series operates based on the following simplistic approximation:
+\[ f(x) \approx \sum_{r = 0}^{N} \frac{f^{(r)}(0)}{r!} x^r \] where N is sufficiently large number.\\\\
+We can also simplify this expression by placing limit as below:
+\[ f(x) = \lim_{N\to\infty} \sum_{r = 0}^{N} \frac{f^{(r)}(0)}{r!} x^r = \sum_{r = 0}^{\infty} \frac{f^{(r)}(0)}{r!} x^r \]
+\\
+Let's thus consider that we apply this operation for the function \[ g(x) = \frac{1}{1+x} \]
+From here, we can get some very simple values as shown below:
+\begin{align*}
+g^{(0)}(x) &= \left ( 1 + x \right )^{-1} \\
+g^{(1)}(x) &= g'(x) \\
+&= \frac{d}{dx} \left [ \left ( 1 + x \right )^{-1} \right ] \\
+&= (-1) \cdot \left ( 1 + x \right )^{-2} \\
+&= - \left ( 1 + x \right )^{-2} \\
+g^{(1)}(x) &= (-1)^{1} \cdot 1! \cdot \left ( 1 + x \right )^{-2} \\\\
+\hline \\
+g^{(2)}(x) &= g''(x) \\
+&= \frac{d^2}{dx^2} \left [ \left ( 1 + x \right )^{-1} \right ] \\
+&= \frac{d}{dx} \left [ - \left ( 1 + x \right )^{-2} \right ] \\
+&= (-1) \cdot (-2) \cdot \left ( 1 + x \right )^{-3} \\
+&= 2 \left ( 1 + x \right )^{-3} \\
+g^{(2)}(x) &= (-1)^{2} \cdot 2! \cdot \left ( 1 + x \right )^{-3} \\\\
+\hline \\
+g^{(3)}(x) &= g'''(x) \\
+&= \frac{d^3}{dx^3} \left [ \left ( 1 + x \right )^{-1} \right ] \\
+&= \frac{d}{dx} \left [ 2 \left ( 1 + x \right )^{-3} \right ] \\
+&= (2) \cdot (-3) \cdot \left ( 1 + x \right )^{-4} \\
+&= - 6 \left ( 1 + x \right )^{-4} \\
+g^{(3)}(x) &= (-1)^{3} \cdot 3! \cdot \left ( 1 + x \right )^{-4} \\
+\end{align*}
+
+Hence, we derive the following expression:
+\[ g^{(k)}(x) = (-1)^k \cdot k! \cdot \left ( 1 + x \right )^{-k-1} \]
+Hence, for any k, we get the following:
+\[ g^{(k)}(0) = (-1)^k \cdot k! \]
+Thus, we get the following:
+\begin{align*}
+g(x) &= \sum_{r = 0}^{\infty} \frac{g^{(r)}(0)}{r!} x^r \\
+&= \sum_{r = 0}^{\infty} \frac{(-1)^r \cdot r!}{r!} x^r \\
+\frac{1}{1+x} &= \sum_{r = 0}^{\infty} \left (-x \right)^r \\
+\frac{1}{1+x} &= \sum_{r = 0}^{\infty} \left[1 - \left(1+x \right) \right]^r
+\end{align*}
+From here, we define a value $y = 1 + x$. Thus, we can get the following:
+\[ \frac{1}{y} = \sum_{r = 0}^{\infty} \left(1 - y \right)^r \]
+Thus, we get the Maclaurin Series of $ f(x) = \frac{1}{x} $ to be as follows:
+\[ f(x) = \frac{1}{x} = \sum_{r = 0}^{\infty} \left(1 - x \right)^r = \sum_{r = 0}^{\infty} (-1)^r \left(x - 1 \right)^r \]
+
+However, the introduction of the alternate variable proffers us a solution to solve this value in the case where $f(0)$ and subsequent derivatives do not exist. Hence, we can introduce a term $a$ such that the following is valid:
+
+\[ f(x) = \sum_{r = 0}^{\infty} \frac{f^{(r)}(a)}{r!} (x-a)^r \]
+
+This is the definition of the \textbf{Taylor Series}, wherein we generalise Maclaurin Series itself to be a form of Taylor Series such that $a = 0$. However, when $a \neq 0$, Taylor Series is used.
+
+For example, applying $a = 1$ on the function $f$ mentioned above, we can derive the Taylor Series of $f$. Firstly, we notice the following:
+\[ f^{(k)}(1) = (-1)^f \cdot f! \]
+This piece of information has not changed from function $g$.
+Hence, we can now apply the Taylor Series:
+\begin{align*}
+f(x) &= \sum_{r = 0}^{\infty} \frac{f^{(r)}(1)}{r!} (x - 1)^r \\
+&= \sum_{r = 0}^{\infty} \frac{(-1)^r \cdot r!}{r!} (x - 1)^r \\
+\frac{1}{x} &= \sum_{r = 0}^{\infty} \left (1 - x \right)^r \\
+f(x) &= \sum_{r = 0}^{\infty} (-1)^r \left(x - 1 \right)^r
+\end{align*}
+
+Hence, for a function $f(x)$, to be expanded about a point $x = a$, let us define a new function $g(x)$ such that $g(x - a) = f(x)$. Then,
+
+\[g(x) = g(0) + g'(0)x + \frac{1}{2}g''(0)x^2 + ...\]
+\[g(x) = f(a) + f'(a)x + \frac{1}{2}f''(a)x^2 + ...\]
+\[f(x) = f(a) + f'(a)(x - a) + \frac{1}{2}f''(a)(x - a)^2 + ...\]
+Hence, 
+\[ f(x) = \sum_{r = 0}^{\infty} \frac{f^{(r)}(a)}{r!} (x-a)^r \]
+for some a, such that f(a) exists.
+
+
+\newpage
+
+\part{Euler's Formula \\ Where the True Magic Begins}
+
+\newpage
+
+\chapter{Introduction}
+The Euler Formula is one of the most fundamental theorems used in our society. From Physical Applications to Mathematical, we have been able to use it pretty much everywhere. But we must first show how it works! Here are two crucial proofs.
+
+\newpage
+
+\chapter{Proof of Euler's Formula}
+
+\section{By Integration}
+This was the proof Euler used extensively to come up with this formula. Here it is, as follows:
+
+Firstly, we notice the following:
+\[ \frac{1}{1 + x^2} = \frac{1}{(1+ix)(1-ix)} = \frac{1}{2} \left [ \frac{1}{1 + ix} + \frac{1}{1 - ix} \right ]  \]
+Now, we integrate both sides with respect to x, from which we get the following:
+\[ \int \frac{dx}{1 + x^2} = \frac{1}{2} \int \frac{dx}{1 + ix} +  \frac{1}{2} \int \frac{dx}{1 - ix}  \]
+As we know (unfortunately) from core math, the LHS of this expression evaluations to $\tan^{-1} x$, and the RHS is pretty easy to integrate.
+\[ \tan^{-1} x = \frac{1}{2i} ln \left (1 + ix \right ) -  \frac{1}{2i} ln \left (1 - ix \right ) \]
+\[ \implies 2i \tan^{-1} x = ln \left (\frac{1 + ix}{1 - ix} \right ) \]
+Now, we can introduce a variable $\theta = 2 \tan^{-1} x$, such that the above the expression evolves as follows:
+
+\begin{align*}
+2i \frac{\theta}{2} &= ln \left (\frac{1 + i \tan \frac{\theta}{2}}{1 - i \tan \frac{\theta}{2}} \right ) \\
+i \theta &= ln \left (\frac{1 - \tan^2 \frac{\theta}{2} + 2i \tan \frac{\theta}{2}}{1 + \tan^2 \frac{\theta}{2}} \right ) \\
+&= ln \left (\frac{1 - \tan^2 \frac{\theta}{2} + 2i \tan \frac{\theta}{2}}{\sec^2 \frac{\theta}{2}} \right ) \\
+&= ln \left ( \cos^2 \frac{\theta}{2} - \sin^2 \frac{\theta}{2} + 2i \sin\frac{\theta}{2} \cos\frac{\theta}{2} \right ) \\
+i\theta &= ln \left ( \cos\theta + i\sin\theta \right ) \\
+\implies e^{i\theta} &= \cos\theta + i\sin\theta
+\end{align*} \\
+
+Hence, we determine Euler's formula, as per the original proof.
+\[ e^{i\theta} = \cos\theta + i\sin\theta \]
+
+\newpage
+
+\section{By Taylor Series}
+Now that you hopefully have a better understanding of Taylor Series, let us now try to prove Euler's Formula using it -- What did you think all that was for?\\\\                 
+So, let us start off by seeing what we need to prove.
+$$e^{i\theta} = \cos\theta + i\sin\theta$$      
+Recall the standard Taylor series:
+
+$$e^{x} = 1 + x + \frac{x^2}{2!} + \frac{x^{3}}{3!} + \frac{x^{4}}{4!}  + \frac{x^{5}}{5!} + ...$$
+
+$$\cos x = 1 - \frac{x^{2}}{2!} +\frac{x^{4}}{4!} - \frac{x^{6}}{6!} + \frac{x^{8}}{8!} - \frac{x^{10}}{10!} + ... $$
+
+$$\sin x = x - \frac{x^{3}}{3!} + \frac{x^{5}}{5!} - \frac{x^{7}}{7!} + \frac{x^{9}}{9!} - \frac{x^{11}}{11!} + ...$$\\ 
+By rewriting each term in Euler's formula using these power series we get:
+
+$$e^{i\theta} = 1 + i\theta + \frac{(i\theta)^2}{2!} + \frac{(i\theta)^{3}}{3!} + \frac{(i\theta)^{4}}{4!} + \frac{(i\theta)^{5}}{5!} + ...$$
+
+
+$$\cos \theta = 1 - \frac{\theta^{2}}{2!} +\frac{\theta^{4}}{4!} - \frac{\theta^{6}}{6!} + \frac{\theta^{8}}{8!} -  \frac{\theta^{10}}{10!} + ... $$
+
+$$i\sin \theta  = i(\theta  - \frac{\theta ^{3}}{3!} + \frac{\theta ^{5}}{5!} - \frac{\theta ^{7}}{7!} + \frac{\theta ^{9}}{9!} - \frac{\theta ^{11}}{11!} + ...)$$\\
+
+Now that we have the tools required, let us start the proof.
+
+\begin{align*}
+e^{i\theta} &\equiv 1 + i\theta + \frac{(i\theta)^2}{2!} + \frac{(i\theta)^{3}}{3!} + \frac{(i\theta)^{4}}{4!} + \frac{(i\theta)^{5}}{5!} + ...\\
+&\equiv 1 + i\theta + i^2\frac{\theta^2}{2!} + i^3\frac{(\theta)^3}{3!} +i^4\frac{(\theta)^4}{4!} +i^5\frac{(\theta)^5}{5!} + ...\\
+&\equiv 1 + i\theta - \frac{\theta^2}{2!} - i\frac{\theta^3}{3!} + \frac{\theta^4}{4!} + i\frac{\theta^5}{5!}  +... \textnormal{ , using $i^2 = -1$}\\
+&\equiv 1 - \frac{\theta^2}{2!}  + \frac{\theta^4}{4!} + i\theta - i\frac{\theta^3}{3!} + i\frac{\theta^5}{5!}  +... \textnormal{ , grouping the real and imaginary terms}\\
+&\equiv (1 - \frac{\theta^2}{2!}  + \frac{\theta^4}{4!} + ... ) + i(\theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} + ... )\\
+&\equiv \cos\theta + i\sin\theta \textnormal{, by using the substitutions we found earlier}
+\end{align*}\\
+
+Hence, we have Euler's formula, shown using Taylor series,
+$$e^{i\theta} = \cos\theta + i\sin\theta$$
+
+
+
+\newpage
+\chapter{Exponentiation}
+
+\section{De Moivre's Theorem}
+For a real $\theta$ and an integer $n$, the following holds:
+$$(\cos\theta+i\sin\theta)^n = \cos n\theta+i\sin n \theta$$
+\subsection{Proof of De Moivre's Theorem}
+For any real number $\theta$, $$e^{i\theta}=\cos\theta+i\sin\theta$$
+For each positive integer $n$, let $P_n$ represent the statement $$(e^{i\theta})^n=\cos n\theta+i\sin n\theta$$
+$P_1$ is true since LHS $= e^{i\theta} = \cos 1\theta+i\sin1\theta = $ RHS.\\
+Suppose $k$ is an arbitrary positive integer and $P_k$ is true. $$(e^{i\theta})^k=\cos k\theta+i\sin k\theta$$
+Then 
+\begin{align*}
+(e^{i\theta})^{k+1}
+&=(e^{i\theta})^k(e^{i\theta})\\
+&=(\cos k\theta+i\sin k\theta)(\cos \theta+i\sin \theta) \\
+&=\cos k\theta \cos \theta-\sin k\theta\sin \theta+i(\sin k\theta\cos \theta+\sin \theta \cos k\theta)  \\
+&=\cos(k+1)\theta+i\sin(k+1)\theta.
+\end{align*}
+Therefore $P_k \implies P_{k+1}$.\\
+By Mathematical Induction, $(e^{i\theta})^{n}=\cos n\theta+i\sin n\theta$ for all positive integer $n$.\\
+For negative integers, let $n$ be a positive integer. Then 
+\begin{align*}
+(e^{i\theta})^{-n} 
+&= (\cos \theta + i\sin\theta)^{-n} \\
+&= ((\cos\theta + i\sin\theta)^n)^{-1}\\
+&= (\cos n\theta + i\sin n \theta)^{-1}\\
+&= \frac{\cos n\theta-i\sin n\theta}{(\cos n\theta + i\sin n \theta)(\cos n\theta - i\sin n \theta)}\\
+&= \cos n\theta - i\sin n\theta\\
+&= \cos (-n\theta) + i\sin (-n\theta)
+\end{align*}
+Lastly, its is obvious that $(\cos\theta + i\sin\theta)^0 = 1 =\cos0\theta + i\sin 0 \theta$. Therefore, we conclude that De Moivre's Theorem holds for all integers.\\
+Note: It might be tempting to directly do the following:
+$(e^{i\theta})^n = e^{i(n\theta)}$. Generally, this is not true for complex numbers if $n$ is not a integer. If $n$ is an integer, we can do this because of De Moivre's Theorem.\\          
+\subsection{Exercise Questions}
+Q1: (MPOW) Given that $x+\frac{1}{x} = \sqrt{3}$, find $x^{2022}+\frac{1}{x^{2022}}$.
+(Hint: $x$ is not a real number, write $x = 
+\cos\frac{\pi}{6}+i\sin\frac{\pi}{6}$. Then $\frac{1}{x} = \cos\frac{\pi}{6}-i\sin\frac{\pi}{6}$ (by De Moivre's theorem).)\\\\\\
+Q2: (SMO(O) 2012)
+Evaluate $\frac{-1}{2^{2011}}\sum\limits_{k=0}^{1006}(-1)^k3^k {2012 \choose 2k}$.\\
+Hint: Consider the complex number $z = \cos\frac{\pi}{3}+i\sin\frac{\pi}{3}$. Using De Moivre's Theorem we have Re$(z^{2012}) = $Re$(\cos\frac{2012\pi}{3}+i\sin\frac{2012\pi}{3})$. Using binomial theorem we have Re$(z^{2012})$ = Re$(\cos\frac{\pi}{3}+i\sin\frac{\pi}{3})^{2012}$
+\newpage
+\subsection{Solutions to Exercise Questions}
+A1: Let $x = (\cos\frac{\pi}{6}+i\sin\frac{\pi}{6})$. $x^{-1} = (\cos\frac{\pi}{6}-i\sin\frac{\pi}{6})$. By De Moivre's theorem, $$x^{2022} = \cos\frac{2022\pi}{6}+i\sin\frac{2022\pi}{6} = -1$$
+$$\frac{1}{x^{2022}} = \frac{1}{-1} = -1$$
+Thus, $\frac{1}{x^{2022}} + x^{2022} = -2$.\\\\
+A2: Consider the complex number $\omega = \cos\frac{\pi}{3} + i\sin\frac{\pi}{3}
+$
+If we were to use the binomial theorem, we would have the following
+\begin{align*}
+Re({\omega^{2012}}) 
+&= Re {(\cos\frac{\pi}{3} + i\sin\frac{\pi}{3})^{2012}}\\
+&= Re(\frac{1}{2} + i\frac{\sqrt{3}}{2})^{2012}\\
+&= (\frac{1}{2})^{2012} - {2012\choose 2}(\frac{1}{2})^{2010}(\frac{3}{2^{2}}) + {2012\choose4}(\frac{1}{2}^{2008})(\frac{3^{2}}{2^{4}})+...+(\frac{3^{1006}}{2^{2012}})\\
+&= \frac{1}{2^{2012}} (1 - 3{2012\choose 2} + 3^{2}{2012\choose4}+...+3^{1006}{2012\choose2012})\\
+\end{align*}
+
+Using De Moivre's theorem, we have:
+
+$Re({\omega^{2012}}) = Re {(\cos\frac{2012\pi}{3} + i\sin\frac{2012\pi}{3})} = \cos\frac{2012\pi}{3} = \cos\frac{2\pi}{3} = -\frac{1}{2}\\$
+
+Thus, 
+
+$$\frac{1}{2^{2012}} (1 - 3{2012\choose 2} + 3^{2}{2012\choose4}+...+3^{1006}{2012\choose2012}) = -\frac{1}{2}$$
+
+multiplying both sides by $-2$, we have 
+
+$$-\frac{1}{2^{2011}} (1 - 3{2012\choose 2} + 3^{2}{2012\choose4}+...+3^{1006}{2012\choose2012}) = 1$$
+
+
+\part{Amazing Applications of Euler's Formula}
+
+\chapter{Mathematical Applications}
+Euler's formula has an astounding array of applications spanning many scientific fields from electrical engineering to vector sequences (a function from natural numbers (the positions of elements in the sequence) to the elements at each position, i.e. $\mathbb{N} \xrightarrow{} \textit{V}$, where \textit{V} is a vector space) to Fourier analysis and greatly helps to simplify calculations with complex numbers, for example in second-order ordinary differential equations with complex roots.\\
+\\
+This equivalence links trigonometric and exponential functions in a very satisfying manner, and is the backbone of many proofs, with Ramanujan, a famous Indian mathematical genius, using it to solve the question posed by the \textit{1911 Journal of the Indian Mathematical Society} in 1912.\\
+\\
+The problem was to express $P(x)$ in closed form, where:
+
+\[ P(x) = \sum_{m=1}^{\infty} \frac{(-1)^m \cos(mx)}{(m+1)(m+2)} \]\\
+
+\section{The Proof}
+This Ramanujan's proof is adapted from Prof Paul Nahin's book, \textit{Dr Euler's Fabulous Formula}. You can download the free PDF from \href{https://libgen.is/book/index.php?md5=7FAA8A069E9204C7561DEC9ED451E7F8}{here}. The paid version can be found \href{https://press.princeton.edu/books/paperback/9780691175911/dr-eulers-fabulous-formula}{here}.
+\newpage
+
+\subsection{Ramanujan's Proof}
+
+Let's firstly make an auxiliary function:
+
+\begin{align*}
+    Q(x) = \sum_{m=1}^{\infty} \frac{(-1)^m \sin(mx)}{(m+1)(m+2)} 
+\end{align*}\\
+then we can use Euler's formula to write:
+\begin{align*}
+    P(x)+iQ(x)=\sum_{m=1}^{\infty} \frac{(-1)^m e^{imx}}{(m+1)(m+2)} =\sum_{m=1}^{\infty} \frac{(-1)^m z^m)}{(m+1)(m+2)}
+\end{align*}\\
+where $z=e^{ix}$. We can write the last sum as
+\begin{align*}
+    \sum_{m=1}^{\infty} \frac{(-1)^m z^m)}{(m+1)(m+2)}=\sum_{m=1}^{\infty} (-1)^m z^m \{\frac{1}{m+1}-\frac{1}{m+2}\} \\= \sum_{m=1}^{\infty} (-z)^m \frac{1}{m+1}- \sum_{m=1}^{\infty} (-z)^m \frac{1}{m+2}
+\end{align*}\\
+Now, as the Maclaurin power series expansion for $\ln(1+x)$ is:
+\begin{align*}
+    \ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}-...=-\sum_{m=1}^{\infty} \frac{(-1)^n}{n} x^n
+\end{align*}\\
+That derivation assumed x is real, but if we now assume that the expansion holds even for the complex-valued $z$ (a consequence of Borel's Lemma, which shows that every sequence of real or complex numbers can appear as coefficients in the Taylor series of an infinitely differentiable function defined on the real line), we can see that
+\begin{flalign*}
+    \sum_{m=1}^{\infty} \frac{(-z)^m}{m+1} &= -\frac{z}{2}+\frac{z^2}{3}-\frac{z^3}{4}+\frac{z^4}{5}-\cdots&&
+\end{flalign*}\\
+and so
+\begin{flalign*}
+    z \sum_{m=1}^{\infty} \frac{(-z)^m}{m+1} = -\frac{z^2}{2}+\frac{z^3}{3}-\frac{z^4}{4}+\frac{z^5}{5}-\cdots\\
+    \implies \sum_{m=1}^{\infty} \frac{(-z)^m}{m+1} = \frac{\ln(1+z)}{z}-1
+\end{flalign*}\\
+Also,
+\begin{flalign*}
+    \sum_{m=1}^{\infty} \frac{(-z)^m}{m+2} = -\frac{z}{3}+\frac{z^2}{4}-\frac{z^3}{5}+\frac{z^4}{6}-\cdots\\
+    \implies z^2\sum_{m=1}^{\infty} \frac{(-z)^m}{m+2} = -\ln(1+z)+z-\frac{z^2}{2}\\
+    \implies \sum_{m=1}^{\infty} \frac{(-z)^m}{m+2} = \frac{-\ln(1+z)}{z^2} + \frac{1}{z} -\frac{1}{2}
+\end{flalign*}\\
+Thus,
+\begin{flalign*}
+    \sum_{m=1}^{\infty} \frac{(-z)^m}{m+1} - \sum_{m=1}^{\infty} \frac{(-z)^m}{m+2}
+    &= \frac{\ln(1+z)}{z}-1-(\frac{-\ln(1+z)}{z^2} + \frac{1}{z} -\frac{1}{2})\\
+    &= \ln(1+z)\{\frac{1}{z} + \frac{1}{z^2} \} - \frac{1}{z} - \frac{1}{2}&&
+\end{flalign*}\\
+Since $z=e^{ix}$, $1/z = e^{-ix}$ and $\frac{1}{z^2}=e^{-i2x}$, and we therefore have
+\begin{flalign*}
+    P(x)+iQ(x) &= \ln(1+e^{ix})\{e^{-ix}+e^{-i2x}\} - e^{-ix}-\frac{1}{2}.
+\end{flalign*}\\
+Now,
+\begin{flalign*}
+    \ln(1+e^{ix})&=\ln \{e^{ix/2}(e^{-ix/2}+e^{ix/2} )\} = \ln\{e^{ix/2}2\cos(\frac{x}{2})\} \\
+    &= i\frac{x}{2} + \ln \{2\cos(\frac{x}{2})\}
+\end{flalign*}\\
+Thus,
+\begin{fleqn*}
+    P(x)+iQ(x)&= [\ln\{2\cos(\frac{x}{2})\}+i\frac{x}{2}]\{e^{-ix}+e^{-i2x}\}-e^{ix}-\frac{1}{2} \\
+    &=[\ln\{2cos(\frac{x}{2})\}+i\frac{x}{2}][\cos(x)+\cos(2x)-i\{\sin{x}+\sin(2x)\}] -\cos(x)+i\sin(x)-\frac{1}{2} \\
+    &=\ln\{2\cos(\frac{x}{2})\}[\cos(x)+cos(2x)]+\frac{x}{2}\{\sin(x)+\sin(2x)\}-
+    \cos(x)-\frac{1}{2}+i[\frac{x}{2}\{\cos(x)+\cos(2x)\}-\ln\{2\cos(\frac{x}{2})\}\times\{\sin(x)+\sin(2x)\}+\sin(x)],
+\end{fleqn*}\\
+and so, equating real parts, we get Ramunajan's answer (despite being unwieldy):
+\begin{flalign*}
+    P(x)&=\sum_{m=1}^{\infty} \frac{(-1)^m \cos(mx)}{(m+1)(m+2)} \\
+    &= \ln\{2\cos(\frac{x}{2})\}[\cos(x)+\cos(2x)]+\frac{x}{2}\{\sin(x)+\sin(2x)\}-\cos(x)-\frac{1}{2}&&
+\end{flalign*}
+
+
+
+\newpage
+\subsection{Exercise Questions}
+\begin{enumerate}[!ht]
+    \item Prove the following infinite series:
+    \[\sum_{k=0}^{\infty} \frac{1}{(2k+1)^2} = \frac{\pi^2}{8}\]
+    Hint: Apply Euler's formula to $\ln[2\cos(u)]$ and integrate it from 0 to $\frac{\pi}{2}$.
+    If you need another hint: Split $\ln(2cosu)$ into two logarithms and apply Maclaurin on the term with ln(1+s), and express it as $-(-x+\frac{x^2}{2}-...)$, then move the definite integral into the summation. After which, apply euler's formula on $e^{-i\pi n}$ to greatly simplify the summation. You should now get the answer.
+    \item \textit{Extremely Difficult} Prove Wallis's Product:
+    \[\frac{\pi}{2} = \prod_{n=1}^{\infty} \frac{4n^2}{4n^2-1} = (\frac{2}{1}\bullet \frac{2}{3})\bullet (\frac{4}{3}\bullet \frac{4}{5})\bullet (\frac{6}{5}\bullet \frac{6}{7})\bullet (\frac{8}{7}\bullet \frac{8}{9})\bullet \cdot \cdot \cdot\]
+    Hint: Use Euler's formula to generalise the expression of $I(n)=\int_0^{\pi} \sin^{2n}(\theta) d\theta$, before plugging in $(2n+1), (2n-1),...,1$ and $2n, (2n-2),...,0$ to find that $I(n)=f(n)I(n-2)$, and this recursive formula, which when stretched to an infinite product, approaches a value, $\frac{\pi}{2}$, as $\lim_{n \to \infty}(\frac{I(2n)}{I(2n+1)})=1$ due to the fact that $I(2n+1)\leq I(2n)\leq I(2n-1)$
+    A much simpler method is to sub in $x=\frac{\pi}{2}$ into Euler's Sinc Product Formula:
+    \[Sinc(x)=\frac{\sin(x)}{x}=\prod^{\infty}_{n=1}(1-\frac{x^2}{n^2\pi^2})\]
+\end{enumerate}
+
+\section{Fourier Analysis}
+Fourier analysis is the study on how to express general functions into trigonometric or exponential functions with definite frequencies. There are two types of Fourier expansions:\\\\
+Fourier series: If a function is periodic, then it can be expressed as a discrete sum of trigonometric functions or exponential functions with specific frequencies\\\\
+ Fourier transform: A general function that isn’t necessarily periodic (but that is still reasonably well-behaved) can be written as a continuous integral of trigonometric or exponential functions with a continuum of possible frequencies.
+ \subsection{Fourier Trigonometric Series}
+ Fourier’s theorem states that any (reasonably well-behaved) function can be written in terms of trigonometric or exponential functions.  Then this function, f(x), will have the following property 
+ $$f(x) = f(x+L)$$ 
+ where L is the period of the function.\\\\
+ Fourier’s theorem states that f(x) can be written as
+$$f(x) = a_0+\sum_{n=1}^{\infty} [a_n \cos({\frac{2\pi nx}{L}})+b_n \sin({\frac{2\pi nx}{L})}]$$
+where
+$$a_0 = \frac{1}{L}\int_0^L \! f(x) \, \mathrm{d}x$$
+$$a_n = \frac{2}{L}\int_0^L \! f(x) \cos({\frac{2\pi nx}{L}}) \, \mathrm{d}x$$
+$$b_n = \frac{2}{L}\int_0^L \! f(x) \sin({\frac{2\pi nx}{L}}) \, \mathrm{d}x$$
+\subsection{Exercise Question}
+
+\begin{enumerate}
+    \item Find the Fourier series of
+  
+    $$f(x) :=
+    \begin{cases}
+    1, & 0 < x < 1, \\
+    0, & -1 < x < 0, \\
+    \frac{1}{2}, & x=0,\pm 1
+    \end{cases}$$
+    given that $$f(x+2)=f(x)$$
+\end{enumerate}
+
+$$f(x)=\frac{1}{2}+\frac{2}{\pi}\sum_{k=1}^{\infty}\frac{1}{2k-1}\sin{((2k-10)\pi x)}$$
+\section{2nd Order ODE}
+
+Ordinary Differential Equation (ODE) gives a relationship of  functions and ordinary derivatives (1 independent variable) in an equation. 
+\smallskip\\
+2nd Order means that the 2nd derivative of a function is the highest derivative of the the function in the equation. i.e.$\frac{d^2y}{dx^2}$
+\smallskip\\
+Euler's Formula can be applied to 2nd Order Differential Equations to solve for complex roots. This is an extension of a commonly used method to solve 2nd Order Differential Equation for real roots, which is to define a new variable, r, in terms of y, where $y= e^rx$. By making use of the exponential function's special property, in which the derivative of $e^x$ is still $e^x$. It resolves the Differential Equation into the Quadratic Equation that can be easily solved to find the real roots.\\ For instance,
+Given a 2nd Order Differential equation where p and q are constants,
+\begin{equation*}
+    \frac{d^2y}{dx^2}+ p\frac{dy}{dx}+qy = 0
+\end{equation*}
+Substituting $y= e^{rx}$ into the equation, where $\frac{dy}{dx}= re^{rx}$ and $\frac{d^2y}{dx^2}= r^2e^{rx}$,
+\begin{align*}
+    r^2e^{rx} + pre^{rx} +qe^{rx} &= 0  \\
+    e^{rx}\left( r^2 + pr +q \right) &= 0 \\
+    r^2 + pr +q &= 0
+\end{align*}
+After solving for $r$, $r$ is substituted back into $y$.\\
+This gives the solution $y = Ae^{r_1x} + Be^{r_2x}$ for two real roots.\\
+\subsection{Solution to 2nd Order ODE with complex roots}
+In the case of complex roots after solving for the quadratic equation, Euler Formula is used. \\
+Assuming the roots are $c\pm di$,we obtain\\ $$y = Ae^{(c+di)x} + Be^{(c-di)x}= (e^{cx})\left( Ae^{dix} + Be^{-dix} \right)$$
+Applying Euler formula, $e^{ix} = \cos{x} + i \sin{x}$
+\begin{align*}
+    Ae^{dix} + Be^{-dix} &= A(\cos(dx) + i \sin(dx)) + B(\cos(-dx) + i \sin(-dx))\\
+    &= A\cos(dx) + B\cos(-dx) + i(A\sin(dx) + B\sin(-dx))\\
+\end{align*}
+Applying Trigonometry, $\sin(x) = -\sin(-x)$ and $\cos(x) = \cos(-x)$,
+\begin{equation*}
+    A\cos(dx) + B\cos(-dx) + i(A\sin(dx) + B\sin(-dx)) = (A+B)\cos(dx) + i(A-B)\sin(dx)
+\end{equation*}
+Hence, we are able to obtain the solution after substituting $F= A+B$, $G= A-B$ and putting it back to the original equation.
+\begin{equation*}
+    y= (e^{cx})\left(F\cos(dx) + iG\sin(dx)\right)
+\end{equation*}
+
+\subsection{Exercise Question}
+\begin{enumerate}
+    \item Find the general solution of the following Differential Equation.\\
+    $\displaystyle \frac{d^2y}{dx^2}-3\frac{dy}{dx}+16y =0$
+\end{enumerate}
+
+
+\newpage
+\chapter{The Physics Behind it All}
+\section{Introduction}
+If you look at it, Physics uses Euler's Formula more so that even Mathematics itself. From something as fundamentally basic as Simple Harmonic Motion to expansive topics like Quantum Mechanics' "Particle in a box" set-up, complex numbers are used most fundamental physical concepts by which we operate.
+
+\section{The Complexity of the Simplest Harmonic Motion}
+Simple Harmonic Motion, as a concept, can be very simply explained off-hand by a few equations, as shown:
+
+\[a = -\omega^2 x = \frac{dv}{dt} = \frac{d^2x}{dt^2} \] \\
+
+Effectively, Simple Harmonic Motion operates on a sinusoidal basis, or rather, operates as a product of a $\sin$ or $\cos$ function, as can be mathematically shown by solving the differential equation as follows:
+
+\[\frac{d^2x}{dt^2} = -\omega^2 x \] \\
+
+However, besides this solution of course, you can simply solve this using Exponential Expression. But there is one problem. Normal Exponential Expressions don't work well.
+
+Let's say the solution is given by
+\[x = e^{bt} \]
+We can now differentiate this to get the velocity:
+\[v = b e^{bt} \]
+Now, deriving the acceleration, we get:
+\[a = b^2 e^{bt} \]
+However, we then get that
+\begin{align*}
+    b^2 &= - \omega^2 \\ \implies \left (\frac{b}{\omega} \right )^2 &= -1
+\end{align*} \\
+If b is a real number, $b^2 \geq 0$
+However, the only way this solution would work is to bring in our favourite imaginary but not imaginary number:
+\[\frac{b}{\omega} = i \]
+Hence, we have that
+\begin{align*}
+    \frac{b}{\omega} &= i \\
+    b &= i \omega \\
+    x &= e ^ { i \omega t } \\
+    &= \cos \left ( \omega t \right ) + i \sin \left ( \omega t \right ) \\
+    v &= i \omega e ^ { i \omega t } \\
+    &= i \omega \cos \left ( \omega t \right ) - \omega \sin \left ( \omega t \right ) \\
+    a &= - \omega^2 e ^ { i \omega t } \\
+    &= - \omega^2 \cos \left ( \omega t \right ) - i \omega^2 \sin \left ( \omega t \right ) \\
+\end{align*}
+
+Let's now try drawing out the argand diagram as shown below:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+\begin{axis}[
+ view={-20}{-20},
+ axis line style = ultra thick,
+ axis lines=middle,
+ zmax=80,
+  ymax=1.5,
+  xmax=1.5,
+   xmin=-1.5,
+   ymin=-1.5,
+ height=12cm,
+        xtick = {-1},
+        xticklabels = {$-\omega^2$},
+ ytick=\empty,
+ ztick=\empty,
+ clip=false,
+ x label style={at={(axis cs:2,0.051)},anchor=north},
+   xlabel={$\Re\{a\}$},
+ y label style={at={(axis cs:0.05,2)},anchor=north},
+   ylabel={$\Im\{a\}$},
+ z label style={at={(axis cs:0.075,0,80)},anchor=north},
+   zlabel={$t$},
+]
+\addplot3+[domain=0:11*pi,samples=500,samples y=0,no marks,ultra thick] 
+({-cos(deg(x))}, 
+{-sin(deg(x))}, 
+{6*x/(pi)});
+\end{axis}
+
+\end{tikzpicture}
+\end{center}
+
+As is noticeable from the above plot, if we were to simply map this plot on the $\Re{a}$ and $t$, we notice a sinusoidal wave formation as shown below:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  \begin{axis}[domain=-1:1, samples=4000, axis lines*=middle, xtick={-1,1}, ytick={-90,90}, xticklabels={$-\omega^2$,$\omega^2$}, yticklabels={$-\pi$/2,$\pi$/2},
+  xlabel={$\Re\{a\}$},
+  ylabel={$t$}
+  ]
+    \addplot[color = red]  {asin(x)-360};
+    \addplot[color = red]  {asin(-x)-180};
+    \addplot[color = red]  {asin(x)};
+    \addplot[color = red]  {asin(-x)+180};
+    \addplot[color = red]  {asin(x)+360};
+      \end{axis}
+\end{tikzpicture}
+\end{center}
+
+This is the exact motion in which a wave moves, i.e. a circle is simply dissipating a harmonic wave. Since a Simple Harmonic Motion Oscillator is known to do this too, we realise that Simple Harmonic Motion is analogous to a rotation on the Argand Diagram. In fact, we denote this motion as a \textbf{phasor}.
+
+
+\section{Phase Through Something: What is a Phasor}
+
+A Phasor is a mathematical concept often used in Physics and Engineering that is often used to represent a sinusoidal wave function with the help of a circle on the Argand Diagram. Surprisingly, the entire concept of a phasor is based on Euler's Formula, hence it allows us to use the Euler Notation to represent a legitimate wave. \\
+
+\subsection{The Wave Function: Escape from Schrödinger}
+
+As we know, the \textbf{Wave Function} is defined as follows.
+
+\[ \psi(x, t) = A \cos(kx - \omega t + \phi) \]
+
+This is a generic equation used for the propagation of waves, where we state the following mathematical definitions:
+
+\begin{align*}
+    k &= \frac{2\pi}{\lambda} \\
+    \omega &= \frac{2\pi}{T}
+\end{align*}
+
+This is an incredibly important formula, since it is able to explain not only the apparent movement in simple harmonic motion at it's finest but it is also able to extend the concept of really any sinusoidal pattern, whether it be transverse waves like electromagnetic waves or longitude waves like sound waves, or even the harmonic motion often found in systems like that of Alternating Current. \\
+
+ \newpage
+In fact, we can plot this wave against both distance and time, as shown below:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+   \begin{axis}[
+    view={-20}{-20},
+   axis line style = ultra thick,
+   axis lines = middle,
+   height=12cm,
+     clip=false,
+ x label style={at={(axis cs:4,0.051,0)},anchor=north},
+  xlabel={$x$},
+ y label style={at={(axis cs:0.05,4,0)},anchor=north},
+  ylabel={$t$},
+ z label style={at={(axis cs:-0.7,0,2)},anchor=north},
+  zlabel={$\psi(x, t)$},
+  xtick=\empty,
+  ytick=\empty,
+  ztick={-1,1},
+  zticklabels={$-A$,$A$},
+   samples=8,zmin=-2,zmax=2,xmin=-4,xmax=4,ymin=0,ymax=4,
+   legend pos = north east
+   ]
+   \addlegendimage{empty legend}
+    %\addplot3[domain=-300:300] {cos(x-y)};
+    \addplot3+ [
+    domain=-3:3,
+    domain y = 0:1,
+    samples = 50,
+    samples y = 2, mesh] {-sin(deg(x-y))};
+    \addplot3+ [domain=-3:3, samples = 100, samples y = 0] {-sin(deg(x))};
+    \addplot3+[samples y=0, domain=-3:3, samples=100, variable=\x, blue] ( {x}, {1}, {-sin(deg(x-1))} );
+    
+    \addlegendentry{\hspace{-.6cm}\textbf{Legend}}
+   \addlegendentry{Mesh of $\psi(x, t)$}
+   \addlegendentry{$\psi(x, 0)$}
+   \addlegendentry{$\psi(x, 1)$}
+   \end{axis}
+\end{tikzpicture}
+\end{center}
+
+However, considering waves as simply a harmonic oscillator operating in 3D space, as we have somewhat previously established, we note that introducing an Argand representation is very much a possible interpretation of a wave. While it is pretty much impossible to really plot the Argand intepretation of the wave against both distance and time, since this would entail an idealistic 4-vector, it is still reasonable to interpret it as an Electromagnetic wave. \\
+
+In an electromagnetic wave, the photon particle flows through a strange sinusoidal formation, since the residual effects of the electric and magnetic fields lead to a rather confusing albeit interesting wave formation. The following shows an example of this graph:
+
+% Electromagnetic wave - colored
+\begin{tikzpicture}[x=(-15:1.2), y=(90:1.0), z=(-150:1.0),
+                    line cap=round, line join=round,
+                    axis/.style={black, thick,->},
+                    vector/.style={>=stealth,->}]
+  \large
+  \def\A{1.5}
+  \def\nNodes{5} % use even number
+  \def\nVectorsPerNode{8}
+  \def\N{\nNodes*40}
+  \def\xmax{\nNodes*pi/2*1.01}
+  \pgfmathsetmacro\nVectors{(\nVectorsPerNode+1)*\nNodes}
+ 
+  \def\vE{{\color{black!40!blue}\mathbf{E}}}
+  \def\vB{{\color{black!40!red}\mathbf{B}}}
+  \def\vk{\mathbf{\hat{k}}}
+ 
+  \def\drawENode{ % draw E node and vectors with some offset
+    \draw[black!40!blue,very thick,variable=\t,domain=\iOffset*pi/2:(\iOffset+1)*pi/2*1.01,samples=40]
+      plot (\t,{\A*cos(\t*360/pi)},0);
+    \foreach \k [evaluate={\t=\k*pi/2/(\nVectorsPerNode+1);
+                           \angle=\k*90/(\nVectorsPerNode+1);}]
+                in {1,...,\nVectorsPerNode}{
+      \draw[vector,black!40!blue!50]  (\iOffset*pi/2+\t,0,0) -- ++(0,{\A*cos(2*\angle+\iOffset*180)},0);
+    }
+  }
+  \def\drawBNode{ % draw B node and vectors with some offset
+    \draw[black!40!red,very thick,variable=\t,domain=\iOffset*pi/2:(\iOffset+1)*pi/2*1.01,samples=40]
+      plot (\t,0,{\A*sin(\t*360/pi)});
+    \foreach \k [evaluate={\t=\k*pi/2/(\nVectorsPerNode+1);
+                           \angle=\k*90/(\nVectorsPerNode+1);}]
+                in {1,...,\nVectorsPerNode}{
+      \draw[vector,black!40!red!50]  (\iOffset*pi/2+\t,0,0) -- ++(0,0,{\A*sin(2*\angle+\iOffset*180)});
+    }
+  }
+ 
+  % main axes
+  \draw[axis] (0,0,0) -- ++(\xmax*1.1,0,0) node[right] {$x$};
+  \draw[axis] (0,-\A*1.4,0) -- (0,\A*1.4,0) node[right] {$y$};
+  \draw[axis] (0,0,-\A*1.4) -- (0,0,\A*1.4) node[above left] {$z$};
+ 
+  % small axes
+  \def\xOffset{{(\nNodes-2)*pi/2}}
+  \def\yOffset{\A*1.2}
+  \def\zOffset{\A*1.2}
+  \draw[axis,black] (\xOffset,\yOffset,-\zOffset) -- ++(\A*0.6,0,0) node[right,align=center] {$\mathbf{\hat{k}}$}; %\\propagation
+  \draw[axis,black!40!blue]  (\xOffset,\yOffset,-\zOffset) -- ++(0,\A*0.6,0) node[right] {$\mathbf{E}$};
+  \draw[axis,black!40!red]   (\xOffset,\yOffset,-\zOffset) -- ++(0,0,\A*0.6) node[above left] {$\mathbf{B}$};
+ 
+  % equation
+  \node[above right] at (\xOffset,-0.5*\yOffset,4*\zOffset)
+    {$\begin{aligned}
+      \vE &= {\color{black!40!blue}\mathbf{E_0}}\cos(\vk\cdot\mathbf{x}-\omega t)\\
+      \vB &= {\color{black!40!red} \mathbf{B_0}}\sin(\vk\cdot\mathbf{x}-\omega t)\\
+      \end{aligned}$};
+ 
+  % draw (anti-)nodes
+  \foreach \iNode [evaluate={\iOffset=\iNode-1;}] in {1,...,\nNodes}{
+    \ifodd\iNode \drawBNode \drawENode % E overlaps B
+    \else        \drawENode \drawBNode % B overlaps E
+    \fi
+  }
+ 
+\end{tikzpicture}
+
+\newpage
+
+When you superpose these two waves, we get the following vector formation, which is a helix.
+ 
+% Electromagnetic wave - circular polarization
+\begin{tikzpicture}[x=(-15:0.8), y=(90:1.0), z=(-150:1.0),
+                    line cap=round, line join=round,
+                    axis/.style={black, thick,->},
+                    vector/.style={>=stealth,->}]
+  \large
+  \def\A{1.5}
+  \def\nNodes{8} % use even number
+  \def\nVectorsPerNode{8}
+  \def\N{\nNodes*40}
+  \def\xmax{\nNodes*pi/2*1.01}
+  \pgfmathsetmacro\nVectors{\nVectorsPerNode*\nNodes}
+ 
+  \def\vE{\mathbf{E}}
+  \def\vB{\mathbf{B}}
+  \def\vk{\mathbf{\hat{k}}}
+ 
+  % main axes
+  \draw[axis] (0,0,0) -- ++(\xmax*1.1,0,0) node[right] {$x$};
+  \draw[axis] (0,-\A*1.4,0) -- (0,\A*1.4,0) node[right] {$y$};
+  \draw[axis] (0,0,-\A*1.4) -- (0,0,\A*1.4) node[above left] {$z$};
+ 
+  % waves
+  \draw[very thick,variable=\t,domain=0:\nNodes*pi/2*1.01,samples=\N]
+    plot (\t,{\A*cos(\t*360/pi)},{\A*sin(\t*360/pi)});
+ 
+  % draw vectors
+  \foreach \k [evaluate={\t=\k*pi/2/\nVectorsPerNode;
+                         \angle=\k*90/\nVectorsPerNode;}]
+              in {1,...,\nVectors}{
+    \draw[vector] (\t,0,0) -- ++(0,{\A*cos(2*\angle)},{\A*sin(2*\angle)});
+  }
+ 
+\end{tikzpicture}
+ 
+This is another way of depicting a wave, with $y$ representing $\Re(\Psi) = \psi$ and $z$ representing $\Im(\Psi)$. This, of course, is a snapshot wave, since time is not a factor, but notably, we can now represent $\Psi(x, t)$ as follows:
+
+\[ \Psi(x, t) = A \left( \cos(kx - \omega t + \phi) + i \sin(kx - \omega t + \phi) \right) = A e^{i \left(kx - \omega t + \phi \right)} \]
+
+Here, we of course assume that $B_0 = E_0$. This is an interesting way of depicting waves using a phasor of sorts. Notably, if we consider an alternative wave that starts at 0, as shown below:
+
+\[ \delta(x, t) = A \sin(kx - \omega t + \phi) \]
+
+From here, we try to derive a function $\Delta(x, t)$ as follows:
+\[ \Re{\left(\Delta(x, t)\right)} = A \sin(kx - \omega t + \phi) \]
+
+We can note the following:
+\begin{align*}
+    \Psi(x, t) &= A e^{i \left(kx - \omega t + \phi \right)} \\
+    &= A \cos(kx - \omega t + \phi) + iA \sin(kx - \omega t + \phi) \\
+    \frac{\Psi(x, t)}{i} &= \frac{A}{i} \cos(kx - \omega t + \phi) + A \sin(kx - \omega t + \phi) \\
+    &= A \sin(kx - \omega t + \phi) - iA \cos(kx - \omega t + \phi) \\
+    \Re{\left(\frac{\Psi(x, t)}{i}\right)} &= A \sin(kx - \omega t + \phi) \\
+    \Delta(x, t) &= \frac{\Psi(x, t)}{i} \\
+    &= A \frac{e^{i \left(kx - \omega t + \phi \right)}}{e^{i\frac{\pi}{2}}} \\
+    &= A e^{i \left(kx - \omega t + \phi - \frac{\pi}{2} \right)}
+\end{align*}
+
+Basically, a sinusoidal function operating on a $\sin$ function is out of phase by $\frac{\pi}{2}$ from a $\cos$ function. As we know,
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  \begin{axis}[domain=-2*pi:2*pi, samples=4000, axis lines*=middle, legend pos=south east]
+  \addlegendimage{empty legend}
+    \addplot[color = red]  {sin(deg(x))};
+    \addplot[color = blue]  {cos(deg(x))};
+    \addlegendentry{\hspace{-.6cm}\textbf{Legend}}
+    \addlegendentry{$\delta(x, 0)$}
+    \addlegendentry{$\psi(x, 0)$}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+In this case, we note that by extension,
+
+\[ \Re{\left(\Delta(x, t)\right)} = \cos \left(kx - \omega t + \phi - \frac{\pi}{2} \right) = A \sin(kx - \omega t + \phi) \]
+
+From here, we get that:
+
+\[ \sin\theta = \cos \left(\theta - \frac{\pi}{2} \right) \]
+
+This is an actual concept of leading and lagging, which is very much synonymous with phasors (which this materials seems to have lost sight of).
+
+\subsection{The Confusion behind Leading and Lagging}
+
+As we must recall from the transformation of graphs, the $\sin$ function is simply a translation parallel to the x=axis by $\frac{\pi}{2}$ units in the positive direction applied on the $\cos$ function, based on the above function. \\
+
+However, in phasors, this is instead said as the $\sin$ function \textbf{lags} the $\cos$ function by $\frac{\pi}{2}$, or alternatively, the $\cos$ function \textbf{leads} the $\sin$ function by $\frac{\pi}{2}$. \\
+
+In phasor terminology, $v_1$ lagging $v_2$ is defined as, in a way, "pushing the other function backward", or rather making the latter function be termed as lagging behind the former. Idealistically, we consider $v_1$ to be the base, and consider $v_2$ relative to $v_1$. As per the graph above, $\cos$ experiences the same signal as $\sin$ beforehand, hence $\cos$ is stuck behind. \\
+
+On the other hand, $v_2$ leading $v_1$, which is basically identical to the above statement, is defined in a similar way, by "pushing the other function forward", or rather making the latter function be termed as being ahead of the former. It's a similar relative motion comparison. \\
+
+While this terminology may seem rather unintuitive, all you really need to know is that this works similar to the translation transformation in the transformation of graphs. Since $v_2$ is leading $v_1$,  $v_2$ is simply $v_1$ transformed by a translation parallel to the x-axis by some $\phi$ units in the negative direction.
+
+\subsection{Superposition in Waves}
+
+Waves perform very specific tests, but in fact superposition is one of the many important ones. For instance, let's say you have a transverse wave of a Wave Function as follows:
+\[ \psi_1(x, t) = A \cos(kx - \omega t) \]
+And another moving similarly but out of phase as follows:
+\[ \psi_2(x, t) = A \sin(kx - \omega t) \]
+
+When these two wave merge, superposition of waves takes place, wherein at any point, the wave function now becomes:
+\[ \psi_T(x, t) = A \left(\cos(kx - \omega t) + \sin(kx - \omega t) \right) \]
+
+If you think about this using the general definition of the R formula, we can solve for the function 
+
+\[R \cos(\theta - \alpha) = \cos\theta + \sin\theta \]
+
+As follows (in a very rigorously explicit piece of working the math department would be proud of):
+
+\begin{align*}
+    \cos\theta + \sin\theta &= R \cos(\theta - \alpha)  \\
+    %&= R \left(\cos\theta\cos\alpha + \sin\theta \sin\alpha \right) \\
+    &= R \cos\theta\cos\alpha + R \sin\theta \sin\alpha \\
+    R \sin\theta = R \cos\theta &= 1 \implies \tan\theta = 1 \implies \theta = \frac{\pi}{4} \\
+    R^2\cos^2\theta = \left(R\cos\theta)\right)^2 &= 1 = R^2\sin^2\theta = \left(R\sin\theta)\right)^2 \\
+    %R^2\sin^2\theta = \left(R\sin\theta)\right)^2 &= 1 \\
+    R^2\sin^2\theta + R^2\cos^2\theta  &= 2 \implies R^2 = 2 \implies R = \sqrt{2} \\
+    \therefore \cos\theta + \sin\theta &= \sqrt{2} \cos \left(\theta - \frac{\pi}{4} \right) 
+\end{align*}
+
+This would be the generic solution to solve for superposition, but we can also do this same thing in the Euler form. Firstly, we redefine the functions as follows:
+\begin{align*}
+    \Psi_1(x, t) &= A e^{i \left(kx - \omega t \right)} \\
+    \Psi_2(x, t) &= A e^{i \left(kx - \omega t \right)} \\
+\end{align*}
+
+
+However, the best real definition of a phasor is in \textbf{Alternating Current}, which also operates in a wave-like formation. \\
+
+\newpage
+\subsection{Alternating Current: Live Complexity}
+
+In this material, we focus especially on the applications of Euler's Formula in advanced circuitry, where complexity appears to be a major focus. \\
+
+Ever since George Westinghouse and Nikola Tesla's historic revolt against the Edison Electric Light Company's (now General Electric) tyrannical usage of Direct Current (DC) and its adoption of Alternating Current (AC) and transformers as a general part of society's usage of electricity, our usage of electricity has always been sinusoidal in nature. \\
+
+In fact, the electrical socket which you use to charge virtually every electronic device you may have transmits electricity by Alternating Current through the infamous "live wire". In Singapore, the electrical socket is rated to 230V, which means that in the standard AC Circuit, with the live socket as the AC source, the "wave equation", so to speak, is as follows:
+
+\[ V(t) = V_{max} \cos(\omega t + \phi) \]
+
+
+% \begin{center}
+% \begin{tikzpicture}[samples=100, >=latex]
+%     \def\Alpha{60}
+%     \def\AlphaRad{3.141592654/3}
+%     \def\VoltageMax{2.7}
+%     \def\CurrentMax{1.8}
+%     \def\Voltage{{\VoltageMax*sin(\Alpha)}}
+%     \def\Current{{\CurrentMax*sin(\Alpha)}}
+%     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     \draw[very thin,color=gray] (-.1,-3.1) grid (7.1,3.1);
+%     \draw[->, >=latex, color=green!50!black] (-.2,0) -- (7.3,0) node[right] {$\omega t$};
+%     \draw[->, >=latex, color=green!50!black] (0,-3.2) -- (0,3.3) node[left] {};
+%     \draw (1.570795,0) node[below]{$\frac{\pi}{2}$};
+%     \draw (3.14159,0) node[below]{${\pi}$};
+%     \draw (4.71238898,0) node[below]{$\frac{3\pi}{2}$};
+%     \draw (6.283185307,0) node[below]{${2\pi}$};
+%     \draw (-4,0) circle (3cm);
+%     \draw[-] (-7.2,0) -- (-.8,0);
+%     \draw[-] (-4,-3.6) -- (-4,3.6);
+%     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%     % voltage
+%     \draw[color=blue!90!white, very thick] plot[id=voltage, domain=0:7] function{\VoltageMax*sin(x)} node[right] {$V(t)$};
+%     % voltage circle
+%     \draw[color=blue!90!white, loosely dashed] (-4,0) circle (\VoltageMax cm);
+%     % angle
+%     \draw[color=green!50!black, thick] (\AlphaRad, \Voltage)--(\AlphaRad,\Current) node[below=18pt] {$\alpha$};
+%     % angle in the circle
+%     \filldraw[fill=green!20,draw=green!50!black] (-4,0) -- (-3,0) arc (0:\Alpha:1) -- cycle node[right] {$\alpha$};
+%     % voltage pointer
+%     \draw[<-,color=blue!90!white, very thick] (\Alpha:\VoltageMax)++(-4,0) --(-4,0);
+%     \draw[color=blue!90!white,  dashed] (\Alpha:\VoltageMax)++(-4,0) -- (\AlphaRad,\Voltage);
+%     % current
+%     \draw[color=red!90!white, very thick] plot[id=current, domain=0:7] function{\CurrentMax*sin(x)} node[right] {$I(t)$};		
+%     % current circle
+%     \draw[color=red!90!white, loosely dashed]    (-4,0) circle (\CurrentMax cm);
+%     % current pointer
+%     \draw[<-,color=red!90!white, very thick] (\Alpha:\CurrentMax)++(-4,0) --(-4,0);
+%     \draw[color=red!90!white,  dashed](\Alpha:\CurrentMax)++(-4,0) -- (\AlphaRad,\Current);
+%     % phase difference
+%     % angular velocity \omega
+%     \draw[->, xshift=-4cm]  (120:2.4cm) arc (120:170:2) node[below] {$\omega$};
+% \end{tikzpicture}
+% \end{center}
+
+% \bibliographystyle{acm}
+% \bibliography{MainBib.bib}
+
+\end{document}
